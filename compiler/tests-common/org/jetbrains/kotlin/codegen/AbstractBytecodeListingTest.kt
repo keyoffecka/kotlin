@@ -68,6 +68,7 @@ abstract class AbstractBytecodeListingTest : CodegenTestCase() {
             if (access and ACC_PROTECTED != 0) addModifier("protected", list)
             if (access and ACC_PRIVATE != 0) addModifier("private", list)
 
+            if (access and ACC_VOLATILE != 0) addModifier("volatile", list)
             if (access and ACC_SYNTHETIC != 0) addModifier("synthetic", list)
             if (access and ACC_DEPRECATED != 0) addModifier("deprecated", list)
             if (access and ACC_FINAL != 0) addModifier("final", list)
