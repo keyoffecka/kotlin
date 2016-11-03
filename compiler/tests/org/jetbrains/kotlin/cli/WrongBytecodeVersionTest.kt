@@ -40,11 +40,11 @@ class WrongBytecodeVersionTest : KtUsefulTestCase() {
         val environment = KotlinTestUtils.createEnvironmentWithMockJdkAndIdeaAnnotations(testRootDisposable)
         LoadDescriptorUtil.compileKotlinToDirAndGetModule(listOf(librarySource), tmpdir, environment)
 
-        for (classFile in File(tmpdir, "library").listFiles { file -> file.extension == JavaClassFileType.INSTANCE.defaultExtension }) {
+        for (classFile in File(tmpdir, "library").listFiles { _ -> file.extension == JavaClassFileType.INSTANCE.defaultExtension }) {
             changeVersionInBytecode(classFile)
         }
 
-        val (output, exitCode) = AbstractCliTest.executeCompilerGrabOutput(K2JVMCompiler(), listOf(
+        val (_, exitCode) = AbstractCliTest.executeCompilerGrabOutput(K2JVMCompiler(), listOf(
                 usageSource.path,
                 "-classpath", tmpdir.path,
                 "-d", tmpdir.path

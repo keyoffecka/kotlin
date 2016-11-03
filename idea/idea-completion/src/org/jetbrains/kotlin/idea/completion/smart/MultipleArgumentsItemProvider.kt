@@ -88,7 +88,7 @@ class MultipleArgumentsItemProvider(
 
         return LookupElementBuilder
                 .create(variables.map { it.name.render() }.joinToString(", ")) //TODO: use code formatting settings
-                .withInsertHandler { context, lookupElement ->
+                .withInsertHandler { context, _ ->
                     if (context.completionChar == Lookup.REPLACE_SELECT_CHAR) {
                         val offset = context.offsetMap.getOffset(SmartCompletion.MULTIPLE_ARGUMENTS_REPLACEMENT_OFFSET)
                         if (offset != -1) {

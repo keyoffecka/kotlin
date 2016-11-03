@@ -365,7 +365,7 @@ abstract class ScriptWithBaseClass(val num: Int, passthrough: Int) : TestDSLClas
 @ScriptTemplateDefinition(
         scriptFilePattern =".*\\.kts",
         resolver = TestKotlinScriptDependenciesResolver::class)
-abstract class ScriptWithoutParams(num: Int)
+abstract class ScriptWithoutParams(_: Int)
 
 @ScriptTemplateDefinition(
         scriptFilePattern =".*\\.kts",

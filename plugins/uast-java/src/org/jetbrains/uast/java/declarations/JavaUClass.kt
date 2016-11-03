@@ -160,7 +160,7 @@ private class JavaUAnonymousClassConstructor(
 
     override val valueParameters by lz {
         val args = newExpression.argumentList ?: return@lz emptyList<UVariable>()
-        args.expressions.mapIndexed { i, psiExpression -> JavaUAnonymousClassConstructorParameter(args, i, this) }
+        args.expressions.mapIndexed { i, _ -> JavaUAnonymousClassConstructorParameter(args, i, this) }
     }
     override val typeParameters by lz { psi.typeParameters.map { JavaConverter.convert(it, this) } }
 

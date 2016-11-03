@@ -30,7 +30,7 @@ abstract class AbstractBlackBoxAgainstJavaCodegenTest : AbstractBlackBoxCodegenT
             jdkKind: TestJdkKind,
             javacOptions: List<String>
     ) {
-        val javaOutputDir = javaSourceDir?.let { directory ->
+        val javaOutputDir = javaSourceDir?.let { _ ->
             CodegenTestUtil.compileJava(findJavaSourcesInDirectory(directory), emptyList(), javacOptions)
         }
 

@@ -59,7 +59,7 @@ class MultiModuleJavaAnalysisCustomTest : KtUsefulTestCase() {
     }
 
     fun testJavaEntitiesBelongToCorrectModule() {
-        val moduleDirs = File(PATH_TO_TEST_ROOT_DIR).listFiles { it -> it.isDirectory }!!
+        val moduleDirs = File(PATH_TO_TEST_ROOT_DIR).listFiles { _ -> it.isDirectory }!!
         val environment = createEnvironment(moduleDirs)
         val modules = setupModules(environment, moduleDirs)
         val projectContext = ProjectContext(environment.project)
@@ -67,7 +67,7 @@ class MultiModuleJavaAnalysisCustomTest : KtUsefulTestCase() {
         val resolverForProject = JvmAnalyzerFacade.setupResolverForProject(
                 "test",
                 projectContext, modules,
-                { module -> ModuleContent(module.kotlinFiles, module.javaFilesScope) },
+                { _ -> ModuleContent(module.kotlinFiles, module.javaFilesScope) },
                 JvmPlatformParameters {
                     javaClass ->
                     val moduleName = javaClass.name.asString().toLowerCase().first().toString()
@@ -96,7 +96,7 @@ class MultiModuleJavaAnalysisCustomTest : KtUsefulTestCase() {
         val modules = HashMap<String, TestModule>()
         for (dir in moduleDirs) {
             val name = dir.name
-            val kotlinFiles = KotlinTestUtils.loadToJetFiles(environment, dir.listFiles { it -> it.extension == "kt" }?.toList().orEmpty())
+            val kotlinFiles = KotlinTestUtils.loadToJetFiles(environment, dir.listFiles { _ -> it.extension == "kt" }?.toList().orEmpty())
             val javaFilesScope = object : DelegatingGlobalSearchScope(GlobalSearchScope.allScope(project)) {
                 override fun contains(file: VirtualFile): Boolean {
                     if (file !in myBaseScope!!) return false

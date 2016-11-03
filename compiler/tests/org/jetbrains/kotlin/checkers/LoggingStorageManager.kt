@@ -60,7 +60,7 @@ class LoggingStorageManager(
 
         // fields named "this" or "this$0"
         val referenceToOuter = lambdaClass.getAllDeclaredFields().firstOrNull {
-            field ->
+            _ ->
             field.type == outerClass && field.name!!.contains("this")
         }
         referenceToOuter?.isAccessible = true
@@ -74,7 +74,7 @@ class LoggingStorageManager(
         }
         val containingField = if (outerInstance == null) null
                               else outerClass?.getAllDeclaredFields()?.firstOrNull {
-                                  field ->
+            _ ->
                                   field.isAccessible = true
                                   val value = field.get(outerInstance)
                                   if (value == null) return@firstOrNull false

@@ -75,7 +75,7 @@ abstract class AbstractPseudoValueTest : AbstractPseudocodeTest() {
         for (value in unboundValues) {
             valueDescriptions[value to null] = valueDescription(null, value)
         }
-        for ((element, value) in elementToValues.entries) {
+        for ((_, _) in elementToValues.entries) {
             valueDescriptions[value to element] = valueDescription(element, value)
         }
 
@@ -83,7 +83,7 @@ abstract class AbstractPseudoValueTest : AbstractPseudocodeTest() {
         val valueColumnWidth = allValues.map { valueDecl(it).length }.max()!!
         val valueDescColumnWidth = valueDescriptions.values.map { it.length }.max()!!
 
-        for ((ve, description) in valueDescriptions.entries) {
+        for ((ve, _) in valueDescriptions.entries) {
             val (value, element) = ve
             out
                     .append("%1$-${elementColumnWidth}s".format(elementText(element)))

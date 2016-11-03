@@ -84,9 +84,9 @@ abstract class BasicBoxTest(
                     .map { it.module }.distinct()
                     .map { it.name to it }.toMap()
 
-            val orderedModules = DFS.topologicalOrder(modules.values) { module -> module.dependencies.mapNotNull { modules[it] } }
+            val orderedModules = DFS.topologicalOrder(modules.values) { _ -> module.dependencies.mapNotNull { modules[it] } }
 
-            val generatedJsFiles = orderedModules.asReversed().mapNotNull { module ->
+            val generatedJsFiles = orderedModules.asReversed().mapNotNull { _ ->
                 val dependencies = module.dependencies.mapNotNull { modules[it]?.outputFileName(outputDir) + ".meta.js" }
 
                 val outputFileName = module.outputFileName(outputDir) + ".js"
@@ -108,7 +108,7 @@ abstract class BasicBoxTest(
             }
             val inputJsFiles = inputFiles
                     .filter { it.fileName.endsWith(".js") }
-                    .map { file ->
+                    .map { _ ->
                         val sourceFile = File(file.fileName)
                         val targetFile = File(outputDir, file.module.outputFileSimpleName() + "-js-" + sourceFile.name)
                         FileUtil.copy(File(file.fileName), targetFile)
