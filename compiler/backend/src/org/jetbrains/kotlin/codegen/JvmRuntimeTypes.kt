@@ -21,13 +21,11 @@ import org.jetbrains.kotlin.descriptors.*
 import org.jetbrains.kotlin.descriptors.annotations.Annotations
 import org.jetbrains.kotlin.descriptors.impl.LocalVariableDescriptor
 import org.jetbrains.kotlin.descriptors.impl.MutablePackageFragmentDescriptor
-import org.jetbrains.kotlin.incremental.components.NoLookupLocation
 import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.resolve.DescriptorUtils
 import org.jetbrains.kotlin.resolve.calls.util.createFunctionType
 import org.jetbrains.kotlin.resolve.descriptorUtil.builtIns
-import org.jetbrains.kotlin.resolve.descriptorUtil.resolveTopLevelClass
 import org.jetbrains.kotlin.types.KotlinType
 import org.jetbrains.kotlin.types.TypeConstructorSubstitution
 import org.jetbrains.kotlin.types.TypeProjectionImpl
@@ -43,6 +41,7 @@ class JvmRuntimeTypes(module: ModuleDescriptor) {
     private val functionReference: ClassDescriptor by klass("FunctionReference")
     private val localVariableReference: ClassDescriptor by klass("LocalVariableReference")
     private val mutableLocalVariableReference: ClassDescriptor by klass("MutableLocalVariableReference")
+    private val coroutineImplClass by klass("CoroutineImpl")
 
     private val propertyReferences: List<ClassDescriptor> by lazy {
         (0..2).map { i -> createClass(kotlinJvmInternalPackage, "PropertyReference$i") }
@@ -52,7 +51,7 @@ class JvmRuntimeTypes(module: ModuleDescriptor) {
         (0..2).map { i -> createClass(kotlinJvmInternalPackage, "MutablePropertyReference$i") }
     }
 
-    private val defaultContinuationSupertype: KotlinType by lazy { createNullableAnyContinuation(module) }
+    val continuationAny: KotlinType by lazy { createNullableAnyContinuation(module) }
 
     /**
      * @return `Continuation<Any?>` type
@@ -89,7 +88,7 @@ class JvmRuntimeTypes(module: ModuleDescriptor) {
 
         val coroutineControllerType = descriptor.controllerTypeIfCoroutine
         if (coroutineControllerType != null) {
-            return listOf(lambda.defaultType, functionType, /*coroutineType,*/ defaultContinuationSupertype)
+            return listOf(coroutineImplClass.defaultType, functionType)
         }
 
         return listOf(lambda.defaultType, functionType)
