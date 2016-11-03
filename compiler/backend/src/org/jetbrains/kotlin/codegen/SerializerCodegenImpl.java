@@ -38,7 +38,7 @@ import java.util.List;
 class SerializerCodegenImpl extends SerializerCodegen {
     private final ImplementationBodyCodegen codegen;
     private final Type descType = Type.getObjectType("kotlin/serialization/KSerialClassDesc");
-    private final Type descImplType = Type.getObjectType("kotlin/jvm/internal/serialization/SerialClassDescImpl");
+    private final Type descImplType = Type.getObjectType("kotlin/internal/SerialClassDescImpl");
     private final Type serialSaverType = Type.getObjectType("kotlin/serialization/KSerialSaver");
     private final Type serialLoaderType = Type.getObjectType("kotlin/serialization/KSerialLoader");
 
@@ -308,7 +308,7 @@ class SerializerCodegenImpl extends SerializerCodegen {
                         serializer = KSerializationUtil.toClassDescriptor(KSerializationUtil.getClassSerializer(property.getType()));
                         // if serializer for class is not defined, then see if there is a builtin serializer
                         if (serializer == null)
-                            serializer = SerializationCodegenUtil.findBuiltInSerializer(type, property);
+                            serializer = SerializationCodegenUtil.findStandardSerializer(type, property);
                     }
                     // other classes
                     namePart = (property.getType().isMarkedNullable() ? "Nullable" : "") +

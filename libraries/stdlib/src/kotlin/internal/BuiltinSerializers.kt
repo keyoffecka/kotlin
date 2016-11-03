@@ -16,10 +16,6 @@
 
 package kotlin.internal
 
-// todo: this does not compile yet
-
-/*
-
 import kotlin.serialization.KInput
 import kotlin.serialization.KOutput
 import kotlin.serialization.KSerialClassDesc
@@ -106,7 +102,8 @@ class ListSerializer<T>(private val element: KSerializer<T>) : KSerializer<List<
             when (index) {
                 KInput.READ_ALL -> {
                     val size = input.readIntElementValue(ListClassDesc, SIZE_INDEX)
-                    result.ensureCapacity(size)
+                    // todo: not yet supported on JS
+                    //result.ensureCapacity(size)
                     for (i in 0..size - 1)
                         result[i] = element.load(input)
                     break@mainLoop
@@ -116,7 +113,8 @@ class ListSerializer<T>(private val element: KSerializer<T>) : KSerializer<List<
                 }
                 KInput.READ_SIZE -> {
                     val size = input.readIntElementValue(ListClassDesc, SIZE_INDEX)
-                    result.ensureCapacity(size)
+                    // todo: not yet supported on JS
+                    //result.ensureCapacity(size)
                 }
                 else -> {
                     if (result.size == index)
@@ -147,7 +145,18 @@ object ListClassDesc : KSerialClassDesc {
     }
 
     override fun getElementIndex(name: String): Int {
-        return if (name == "size") SIZE_INDEX else name.toInt()
+        return if (name == "size") SIZE_INDEX else parseInt(name)
+    }
+
+    // todo: kludge: becaues JS does not have String.toInt() KT-4497
+    private fun parseInt(name: String): Int {
+        check(name != "") { "empty name" }
+        var result = 0
+        for (c in name) {
+            check(c in '0'..'9') { "Invalid digit $c" }
+            result = result * 10 + (c.toInt() - '0'.toInt())
+        }
+        return result
     }
 }
-*/
+

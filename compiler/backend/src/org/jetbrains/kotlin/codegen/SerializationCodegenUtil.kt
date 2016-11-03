@@ -27,7 +27,7 @@ import org.jetbrains.kotlin.resolve.descriptorUtil.module
 import org.jetbrains.kotlin.serialization.deserialization.findClassAcrossModuleDependencies
 import org.jetbrains.org.objectweb.asm.Type
 
-private val Type.builtInSerializer: String? get() = when (this.className) {
+private val Type.standardSerializer: String? get() = when (this.className) {
     "java.lang.Boolean" -> "BooleanSerializer"
     "java.lang.Byte" -> "ByteSerializer"
     "java.lang.Short" -> "ShortSerializer"
@@ -41,9 +41,9 @@ private val Type.builtInSerializer: String? get() = when (this.className) {
     else -> null
 }
 
-private val packageFqName = FqName("kotlin.internal.serialization")
+private val packageFqName = FqName("kotlin.internal")
 
-fun findBuiltInSerializer(type: Type, property: PropertyDescriptor): ClassDescriptor? {
-    val name = type.builtInSerializer ?: return null
+fun findStandardSerializer(type: Type, property: PropertyDescriptor): ClassDescriptor? {
+    val name = type.standardSerializer ?: return null
     return property.module.findClassAcrossModuleDependencies(ClassId(packageFqName, Name.identifier(name)))
 }

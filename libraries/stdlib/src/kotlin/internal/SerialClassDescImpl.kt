@@ -14,9 +14,8 @@
  * limitations under the License.
  */
 
-package kotlin.jvm.internal.serialization
+package kotlin.internal
 
-import java.lang.IllegalArgumentException
 import java.util.*
 import kotlin.serialization.KSerialClassDesc
 
