@@ -794,8 +794,7 @@ public class ImplementationBodyCodegen extends ClassBodyCodegen {
     }
 
     private void generateSyntheticFunctions() {
-        // todo:extension-point
-        //SerializerCodegenImpl.generateSerializerFunctions(this);
+        SerializerCodegenImpl.generateSerializerFunctions(this);
     }
 
     private void generateEnumMethods() {

@@ -14840,6 +14840,45 @@ public class IrBlackBoxCodegenTestGenerated extends AbstractIrBlackBoxCodegenTes
         }
     }
 
+    @TestMetadata("compiler/testData/codegen/box/serialization")
+    @TestDataPath("$PROJECT_ROOT")
+    @RunWith(JUnit3RunnerWithInners.class)
+    public static class Serialization extends AbstractIrBlackBoxCodegenTest {
+        public void testAllFilesPresentInSerialization() throws Exception {
+            KotlinTestUtils.assertAllTestsPresentByMetadata(this.getClass(), new File("compiler/testData/codegen/box/serialization"), Pattern.compile("^(.+)\\.kt$"), true);
+        }
+
+        @TestMetadata("serializeCustom.kt")
+        public void testSerializeCustom() throws Exception {
+            String fileName = KotlinTestUtils.navigationMetadata("compiler/testData/codegen/box/serialization/serializeCustom.kt");
+            doTest(fileName);
+        }
+
+        @TestMetadata("serializeData.kt")
+        public void testSerializeData() throws Exception {
+            String fileName = KotlinTestUtils.navigationMetadata("compiler/testData/codegen/box/serialization/serializeData.kt");
+            doTest(fileName);
+        }
+
+        @TestMetadata("serializeDataExplicit.kt")
+        public void testSerializeDataExplicit() throws Exception {
+            String fileName = KotlinTestUtils.navigationMetadata("compiler/testData/codegen/box/serialization/serializeDataExplicit.kt");
+            doTest(fileName);
+        }
+
+        @TestMetadata("serializeRec.kt")
+        public void testSerializeRec() throws Exception {
+            String fileName = KotlinTestUtils.navigationMetadata("compiler/testData/codegen/box/serialization/serializeRec.kt");
+            doTest(fileName);
+        }
+
+        @TestMetadata("serializeReg.kt")
+        public void testSerializeReg() throws Exception {
+            String fileName = KotlinTestUtils.navigationMetadata("compiler/testData/codegen/box/serialization/serializeReg.kt");
+            doTest(fileName);
+        }
+    }
+
     @TestMetadata("compiler/testData/codegen/box/smap")
     @TestDataPath("$PROJECT_ROOT")
     @RunWith(JUnit3RunnerWithInners.class)
