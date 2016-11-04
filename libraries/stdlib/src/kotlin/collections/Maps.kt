@@ -26,7 +26,10 @@ private object EmptyMap : Map<Any?, Nothing>, Serializable {
     private fun readResolve(): Any = EmptyMap
 }
 
-/** Returns an empty read-only map of specified type. The returned map is serializable (JVM). */
+/**
+ * Returns an empty read-only map of specified type. The returned map is serializable (JVM).
+ * @sample samples.collections.Maps.Instantiation.emptyReadOnlyMap
+ */
 public fun <K, V> emptyMap(): Map<K, V> = @Suppress("UNCHECKED_CAST") (EmptyMap as Map<K, V>)
 
 /**
@@ -36,16 +39,22 @@ public fun <K, V> emptyMap(): Map<K, V> = @Suppress("UNCHECKED_CAST") (EmptyMap 
  *
  * Entries of the map are iterated in the order they were specified.
  * The returned map is serializable (JVM).
+ *
+ * @sample samples.collections.Maps.Instantiation.mapFromPairs
  */
 public fun <K, V> mapOf(vararg pairs: Pair<K, V>): Map<K, V> = if (pairs.size > 0) linkedMapOf(*pairs) else emptyMap()
 
-/** Returns an empty read-only map. The returned map is serializable (JVM). */
+/**
+ * Returns an empty read-only map. The returned map is serializable (JVM).
+ * @sample samples.collections.Maps.Instantiation.emptyReadOnlyMap
+ */
 @kotlin.internal.InlineOnly
 public inline fun <K, V> mapOf(): Map<K, V> = emptyMap()
 
 /**
  * Returns an immutable map, mapping only the specified key to the
  * specified value.  The returned map is serializable.
+ * @sample samples.collections.Maps.Instantiation.mapFromPairs
  */
 @JvmVersion
 public fun <K, V> mapOf(pair: Pair<K, V>): Map<K, V> = Collections.singletonMap(pair.first, pair.second)
@@ -55,6 +64,8 @@ public fun <K, V> mapOf(pair: Pair<K, V>): Map<K, V> = Collections.singletonMap(
  * where the first component is the key and the second is the value. If multiple pairs have
  * the same key, the resulting map will contain the value from the last of those pairs.
  * Entries of the map are iterated in the order they were specified.
+ * @sample samples.collections.Maps.Instantiation.mutableMapFromPairs
+ * @sample samples.collections.Maps.Instantiation.emptyMutableMap
  */
 public fun <K, V> mutableMapOf(vararg pairs: Pair<K, V>): MutableMap<K, V>
         = LinkedHashMap<K, V>(mapCapacity(pairs.size)).apply { putAll(pairs) }
@@ -63,7 +74,7 @@ public fun <K, V> mutableMapOf(vararg pairs: Pair<K, V>): MutableMap<K, V>
  * Returns a new [HashMap] with the specified contents, given as a list of pairs
  * where the first component is the key and the second is the value.
  *
- * @sample test.collections.MapTest.createUsingPairs
+ * @sample samples.collections.Maps.Instantiation.hashMapFromPairs
  */
 public fun <K, V> hashMapOf(vararg pairs: Pair<K, V>): HashMap<K, V>
         = HashMap<K, V>(mapCapacity(pairs.size)).apply { putAll(pairs) }
@@ -75,7 +86,7 @@ public fun <K, V> hashMapOf(vararg pairs: Pair<K, V>): HashMap<K, V>
  * the same key, the resulting map will contain the value from the last of those pairs.
  * Entries of the map are iterated in the order they were specified.
  *
- * @sample test.collections.MapTest.createLinkedMap
+ * @sample samples.collections.Maps.Instantiation.linkedMapFromPairs
  */
 public fun <K, V> linkedMapOf(vararg pairs: Pair<K, V>): LinkedHashMap<K, V>
         = LinkedHashMap<K, V>(mapCapacity(pairs.size)).apply { putAll(pairs) }
