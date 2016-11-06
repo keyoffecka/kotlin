@@ -1,0 +1,154 @@
+<project>
+  <modelVersion>4.0.0</modelVersion>
+
+  <name>kotlin-preloader</name>
+  <description>Since there is no official artifact on Central Reporitory, this is a howebrew preloader artifact of the Kotlin compiler</description>
+  <url>https://github.com/keyoffecka/kotlin-preloader</url>
+  <groupId>net.offecka</groupId>
+  <artifactId>kotlin-preloader</artifactId>
+  <version>1.0.4-1</version>
+  <packaging>jar</packaging>
+
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+      <comments>A business-friendly OSS license</comments>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <id>JetBrains</id>
+      <name>JetBrains Team</name>
+      <organization>JetBrains</organization>
+      <organizationUrl>http://www.jetbrains.com</organizationUrl>
+    </developer>
+    <developer>
+      <name>Konstantin Golub</name>
+      <email>key.offecka@runbox.com</email>
+    </developer>
+  </developers>
+  <scm>
+    <connection>scm:git@github.com:keyoffecka/kotlin.git</connection>
+    <developerConnection>scm:git@github.com:keyoffecka/kotlin.git</developerConnection>
+    <url>git@github.com:keyoffecka/kotlin.git</url>
+  </scm>
+  <distributionManagement>
+    <snapshotRepository>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+    </snapshotRepository>
+    <repository>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+    </repository>
+  </distributionManagement>
+
+  <properties>
+    <kotlin.version>1.0.4</kotlin.version>
+    
+    <properties.plugin.version>1.0.0</properties.plugin.version>
+    <compiler.plugin.version>2.3.2</compiler.plugin.version>
+    <jar.plugin.version>3.0.2</jar.plugin.version>
+    <javadoc.plugin.version>2.10.4</javadoc.plugin.version>
+    <source.plugin.version>3.0.1</source.plugin.version>
+    <staging.plugin.version>1.6.3</staging.plugin.version>
+    <gpg.plugin.version>1.5</gpg.plugin.version>
+
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <target.version>1.6</target.version>
+    <source.version>1.6</source.version>
+  </properties>
+
+  <build>
+    <sourceDirectory>src</sourceDirectory>
+
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>${compiler.plugin.version}</version>
+        <configuration>
+          <source>${target.version}</source>
+          <target>${source.version}</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>${jar.plugin.version}</version>
+        <configuration>
+          <archive>
+            <manifest>
+              <mainClass>org.jetbrains.kotlin.preloading.Preloader</mainClass>
+            </manifest>
+            <manifestEntries>
+              <Built-By>Konstantin Golub &lt;key.offecka@runbox.com&gt;</Built-By>
+              <Implementation-Vendor>JetBrains</Implementation-Vendor>
+              <Implementation-Title>Kotlin Preloader</Implementation-Title>
+              <Implementation-Version>${kotlin.version}</Implementation-Version>
+            </manifestEntries>
+          </archive>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>${javadoc.plugin.version}</version>
+        <executions>
+          <execution>
+            <id>gen-javadoc</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>${source.plugin.version}</version>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <goals>
+              <goal>jar-no-fork</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>attach-javadocs</id>
+            <goals>
+              <goal>jar-no-fork</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.sonatype.plugins</groupId>
+        <artifactId>nexus-staging-maven-plugin</artifactId>
+        <version>${staging.plugin.version}</version>
+        <extensions>true</extensions>
+        <configuration>
+          <serverId>ossrh</serverId>
+          <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+          <autoReleaseAfterClose>false</autoReleaseAfterClose>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-gpg-plugin</artifactId>
+        <version>${gpg.plugin.version}</version>
+        <executions>
+          <execution>
+            <id>sign-artifacts</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>sign</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>
