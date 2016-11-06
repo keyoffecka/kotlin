@@ -3,7 +3,7 @@
 
   <name>kotlin-preloader</name>
   <description>Since there is no official artifact on Central Reporitory, this is a howebrew preloader artifact of the Kotlin compiler</description>
-  <url>https://github.com/keyoffecka/kotlin-preloader</url>
+  <url>https://github.com/keyoffecka/kotlin</url>
   <groupId>net.offecka</groupId>
   <artifactId>kotlin-preloader</artifactId>
   <version>1.0.4-1</version>

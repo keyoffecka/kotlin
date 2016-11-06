@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="kotlin-ant-enhanced-test" default="all">
+  <property name="kotlin.version" value="1.0.4"/>
+
+  <typedef resource="org/jetbrains/kotlin/ant/antlib.xml">
+    <classpath>
+      <pathelement location="../target/kotlin-ant-${kotlin.version}-1.jar"/>
+      <pathelement location="kotlin-runtime-${kotlin.version}.jar"/>
+      <pathelement location="kotlin-stdlib-${kotlin.version}.jar"/>
+      <pathelement location="kotlin-preloader-${kotlin.version}.jar"/>
+      <pathelement location="kotlin-compiler-${kotlin.version}.jar"/>
+    </classpath>
+  </typedef>
+
+  <target name="compile">
+    <delete dir="../target/test-classes" includeemptydirs="true"/>
+    <mkdir dir="../target/test-classes"/>
+    <javac destdir="../target/test-classes" includeAntRuntime="false" debug="true" debuglevel="lines,vars,source">
+      <src path="../test"/>
+      <withKotlin>
+        <compilerarg line="-no-stdlib"/>
+        <compilerarg line="-no-reflect"/>
+      </withKotlin>
+    </javac>
+  </target>
+
+  <target name="compile-js">
+    <delete dir="../target/jsc" includeemptydirs="true"/>
+    <mkdir dir="../target/jsc"/>
+
+    <kotlin2js src="../testjs" output="../target/jsc/jstest.js" library="kotlin-jslib-${kotlin.version}.jar" nostdlib="true"/>
+  </target>
+
+  <target name="all" depends="compile-js,compile"/>
+</project>

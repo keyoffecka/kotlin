@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="kotlin-ant-std-test" default="all">
+  <property name="kotlin.version" value="1.0.4"/>
+
+  <delete file="lib/kotlin-ant.jar"/>
+  <copy file="../target/kotlin-ant-${kotlin.version}-1.jar" tofile="lib/kotlin-ant.jar"/>
+
+  <typedef resource="org/jetbrains/kotlin/ant/antlib.xml">
+    <classpath>
+      <pathelement location="lib/kotlin-ant.jar"/>
+    </classpath>
+  </typedef>
+
+  <target name="compile">
+    <delete dir="../target/test-classes" includeemptydirs="true"/>
+    <mkdir dir="../target/test-classes"/>
+    <javac destdir="../target/test-classes" includeAntRuntime="false" debug="true" debuglevel="lines,vars,source">
+      <withKotlin/>
+      <src path="../test"/>
+    </javac>
+  </target>
+
+  <target name="compile-js">
+    <delete dir="../target/jsc" includeemptydirs="true"/>
+    <mkdir dir="../target/jsc"/>
+
+    <kotlin2js src="../testjs" output="../target/jsc/jstest.js"/>
+  </target>
+
+  <target name="all" depends="compile,compile-js"/>
+</project>
